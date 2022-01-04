@@ -16,9 +16,25 @@
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.28.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.5",
+    "npm-run-all": "^4.1.5",
+    "pinst": "^2.1.6",
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
     "webpack": "^5.65.0"
+  },
+  "lint-staged": {
+    "*.ts": "yarn lint-staged --",
+    "*.json": "npx prettier -c --write"
+  },
+  "scripts": {
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable",
+    "lint-staged:eslint": "eslint --cache --fix",
+    "lint-staged:tsc": "tsc --noEmit && :",
+    "lint-staged": "run-p 'lint-staged:* {@}'"
   }
 }
