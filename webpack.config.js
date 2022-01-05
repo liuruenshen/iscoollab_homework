@@ -1,12 +1,13 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
 /* eslint no-undef: "off" */
 const path = require("path")
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const rootPath = __dirname
 
 module.exports = function () {
   return {
     devtool: "source-map",
-    entry: "./src/index.js",
+    entry: "./src/index.tsx",
     output: {
       path: path.resolve(rootPath, "dist"),
       filename: '[name].js',
@@ -21,7 +22,6 @@ module.exports = function () {
     resolve: {
       extensions: ['.tsx', '.ts'],
     },
-
 
     module: {
       rules: [
@@ -45,6 +45,8 @@ module.exports = function () {
           ],
         },
       ]
-    }
+    },
+
+    plugins: [new HtmlWebpackPlugin()]
   };
 };
