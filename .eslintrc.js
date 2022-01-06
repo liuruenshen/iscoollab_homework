@@ -1,3 +1,5 @@
+/* eslint no-undef: "off" */
+
 module.exports = {
     "env": {
         "browser": true,
@@ -21,5 +23,17 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-    }
+    },
+    "overrides": [
+        {
+            "files": [
+                "test/**/*.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": [
+                    "off"
+                ]
+            }
+        }
+    ],
 };
