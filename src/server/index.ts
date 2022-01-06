@@ -4,28 +4,15 @@ import {
   ApiMenuResponse,
   ApiOrderListRequest,
   ApiHistoryResponse,
-  DishItem,
   DishHashRecord,
   OrderList
 } from '../common.type'
 
-import { SERVICE_PORT } from '../constants'
+import { SERVICE_PORT, MENU } from '../constants'
 
 const app = express()
 
-const Menu: DishItem[] = [
-  { category: '日式料理', dish: '鰻魚丼', id: uuidv4() },
-  { category: '日式料理', dish: '生魚片', id: uuidv4() },
-  { category: '日式料理', dish: '唐揚雞定食', id: uuidv4() },
-  { category: '台菜', dish: '滷肉飯', id: uuidv4() },
-  { category: '台菜', dish: '鵝肉米粉', id: uuidv4() },
-  { category: '台菜', dish: '炸醬涼麵', id: uuidv4() },
-  { category: '美式料理', dish: '漢堡', id: uuidv4() },
-  { category: '美式料理', dish: '薯條', id: uuidv4() },
-  { category: '美式料理', dish: '雞塊', id: uuidv4() },
-]
-
-const DishHash: DishHashRecord = Menu.reduce(
+const DishHash: DishHashRecord = MENU.reduce(
   (accumulation, current) => ({ ...accumulation, [current.id]: current }), {})
 
 const OrderHistories: OrderList[] = []
@@ -33,7 +20,7 @@ const OrderHistories: OrderList[] = []
 app.use(express.json());
 
 app.get('/menu', (req, res) => {
-  const response: ApiMenuResponse = { menu: Menu }
+  const response: ApiMenuResponse = { menu: MENU }
   const data = JSON.stringify(response)
   res.header('Content-Type', 'application/json')
   res.send(data)
@@ -75,3 +62,4 @@ app.get('/history', (req, res) => {
 })
 
 app.listen(SERVICE_PORT)
+console.log('API Server start serving...')
