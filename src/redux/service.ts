@@ -2,25 +2,28 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import * as Type from '../common.type'
 import { SERVICE_PORT } from '../constants'
 
-const serviceUrl = `http://localhost:${SERVICE_PORT}`
+export const serviceUrl = `http://localhost:${SERVICE_PORT}`
 
 export const orderMenuService = createApi({
   reducerPath: 'orderMenuService',
   baseQuery: fetchBaseQuery({
-    baseUrl: serviceUrl
+    baseUrl: serviceUrl,
   }),
   endpoints: (builder) => ({
-    menu: builder.query<Type.ApiMenuResponse, void>({
+    menu: builder.query<Type.ApiMenuResponse['menu'], void>({
       query() {
         return {
-          url: 'menu'
+          url: 'menu',
         }
+      },
+      transformResponse(data: Type.ApiMenuResponse) {
+        return data.menu;
       }
     }),
     history: builder.query<Type.ApiHistoryResponse, void>({
       query() {
         return {
-          url: 'history'
+          url: 'history',
         }
       }
     }),
@@ -28,7 +31,7 @@ export const orderMenuService = createApi({
       query(body) {
         return {
           url: 'order',
-          body
+          body,
         }
       }
     })
