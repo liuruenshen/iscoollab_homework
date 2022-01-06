@@ -1,7 +1,7 @@
 /* eslint no-undef: "off" */
 
 module.exports = function (api) {
-  api.cache(true)
+  api.cache(true);
 
   return {
     exclude: ['node_modules/core-js/**'],
@@ -18,7 +18,6 @@ module.exports = function (api) {
         },
       ],
     ],
-    plugins: [
-    ],
-  }
-}
+    plugins: [],
+  };
+};

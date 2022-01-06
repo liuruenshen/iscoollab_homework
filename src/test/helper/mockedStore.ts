@@ -5,7 +5,7 @@ import {
   EnhancedStore,
   Middleware,
   Reducer,
-} from "@reduxjs/toolkit";
+} from '@reduxjs/toolkit';
 
 interface RtkQueryApiService {
   reducer: Reducer<any, any>;
@@ -36,14 +36,14 @@ export function setupApiStore<
 
   type StoreType = EnhancedStore<
     {
-      api: ReturnType<A["reducer"]>;
+      api: ReturnType<A['reducer']>;
     } & {
       [K in keyof R]: ReturnType<R[K]>;
     },
     AnyAction,
     ReturnType<typeof getStore> extends EnhancedStore<any, any, infer M>
-    ? M
-    : never
+      ? M
+      : never
   >;
 
   const initialStore = getStore() as StoreType;

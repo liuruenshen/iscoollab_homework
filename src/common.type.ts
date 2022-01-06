@@ -1,4 +1,4 @@
-type Category = '日式料理' | '台菜' | '美式料理'
+type Category = '日式料理' | '台菜' | '美式料理';
 
 export interface DishItem {
   category: Category;
@@ -8,24 +8,24 @@ export interface DishItem {
 
 export interface OrderItem {
   dishId: string;
-  amount: number
+  amount: number;
 }
 
 export interface ApiOrderListRequest {
-  items: OrderItem[]
+  items: OrderItem[];
 }
 
 export interface OrderList extends ApiOrderListRequest {
-  date: number
-  id: string
+  date: number;
+  id: string;
 }
 
-export type DishHashRecord = Record<string, DishItem>
+export type DishHashRecord = Record<string, DishItem>;
 
 export interface ApiMenuResponse {
-  menu: DishItem[]
+  menu: DishItem[];
 }
 
 export interface ApiHistoryResponse {
-  items: OrderList[]
+  items: OrderList[];
 }

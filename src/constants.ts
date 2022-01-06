@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
-import { DishItem } from './common.type'
+import { DishItem } from './common.type';
 
 export const SERVICE_PORT = 8888;
 
@@ -14,4 +14,4 @@ export const MENU: DishItem[] = [
   { category: '美式料理', dish: '漢堡', id: uuidv4() },
   { category: '美式料理', dish: '薯條', id: uuidv4() },
   { category: '美式料理', dish: '雞塊', id: uuidv4() },
-]
+];
