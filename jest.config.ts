@@ -54,10 +54,10 @@ export default {
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once before all test suites
-  // globalSetup: undefined,
+  globalSetup: "./src/test/globalSetup.js",
 
   // A path to a module which exports an async function that is triggered once after all test suites
-  // globalTeardown: undefined,
+  globalTeardown: "./src/test/globalSetup.js",
 
   // A set of global variables that need to be available in all test environments
   // globals: {},
@@ -125,8 +125,9 @@ export default {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
-
+  "setupFiles": [
+    "./src/test/setupJest.js"
+  ],
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
 
@@ -137,7 +138,7 @@ export default {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
