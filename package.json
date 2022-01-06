@@ -55,6 +55,7 @@
     "build": "webpack -c webpack.config.js --mode production",
     "watch:server": "ts-node --project ./tsconfig.node.json ./src/server/index.ts",
     "watch:dev": "webpack -c webpack.config.js --mode production --watch",
-    "watch": "run-p 'watch:*'"
+    "watch": "run-p 'watch:*'",
+    "test": "jest"
   }
 }
