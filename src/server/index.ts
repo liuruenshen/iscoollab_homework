@@ -1,31 +1,17 @@
 import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
+import {
+  ApiMenuResponse,
+  ApiOrderListRequest,
+  ApiHistoryResponse,
+  DishItem,
+  DishHashRecord,
+  OrderList
+} from '../common.type'
+
+import { SERVICE_PORT } from '../constants'
 
 const app = express()
-
-type Category = '日式料理' | '台菜' | '美式料理'
-
-interface DishItem {
-  category: Category;
-  dish: string;
-  id: string;
-}
-
-interface OrderItem {
-  dishId: string;
-  amount: number
-}
-
-interface OrderListRequest {
-  items: OrderItem[]
-}
-
-interface OrderList extends OrderListRequest {
-  date: number
-  id: string
-}
-
-type DishHashRecord = Record<string, DishItem>
 
 const Menu: DishItem[] = [
   { category: '日式料理', dish: '鰻魚丼', id: uuidv4() },
@@ -39,21 +25,23 @@ const Menu: DishItem[] = [
   { category: '美式料理', dish: '雞塊', id: uuidv4() },
 ]
 
-const DishHash: DishHashRecord = Menu.reduce((accumulation, current) => ({ ...accumulation, [current.id]: current }), {})
+const DishHash: DishHashRecord = Menu.reduce(
+  (accumulation, current) => ({ ...accumulation, [current.id]: current }), {})
 
 const OrderHistories: OrderList[] = []
 
 app.use(express.json());
 
 app.get('/menu', (req, res) => {
-  const data = JSON.stringify(Menu)
+  const response: ApiMenuResponse = { menu: Menu }
+  const data = JSON.stringify(response)
   res.header('Content-Type', 'application/json')
   res.send(data)
 })
 
 app.post('/order', (req, res) => {
   try {
-    const orderList: OrderListRequest = req.body
+    const orderList: ApiOrderListRequest = req.body
     const validOrderItems = orderList.items.filter(item => !!DishHash[item.dishId])
 
     if (!validOrderItems.length) {
@@ -82,7 +70,8 @@ app.post('/order', (req, res) => {
 })
 
 app.get('/history', (req, res) => {
-  res.send(JSON.stringify(OrderHistories))
+  const response: ApiHistoryResponse = { items: OrderHistories }
+  res.send(JSON.stringify(response))
 })
 
-app.listen(8888)
+app.listen(SERVICE_PORT)
