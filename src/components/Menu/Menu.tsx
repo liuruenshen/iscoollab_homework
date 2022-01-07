@@ -4,6 +4,8 @@ import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import AddIcon from '@mui/icons-material/AddBoxRounded';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useMenuQuery } from '../../redux/service';
 import { Category, DishItem } from '../../common.type';
@@ -41,13 +43,19 @@ export default function Menu() {
       <List component="nav">
         {menuCategory.map((item) => (
           <>
-            <ListItemButton key={item.category}>
-              <ListItemText>{item.category}</ListItemText>
-            </ListItemButton>
+            <ListItemText
+              key={item.category}
+              sx={{ padding: '4px 0 4px 10px' }}
+            >
+              {item.category}
+            </ListItemText>
             <Collapse in={true} timeout="auto">
               <List component="div" disablePadding>
                 {item.items.map((subItem) => (
                   <ListItemButton key={subItem.dish} sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <AddIcon></AddIcon>
+                    </ListItemIcon>
                     {subItem.dish}
                   </ListItemButton>
                 ))}
