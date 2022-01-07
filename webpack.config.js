@@ -2,25 +2,21 @@
 /* eslint no-undef: "off" */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const rootPath = __dirname;
 
-module.exports = function () {
+module.exports = function (env, argv) {
   return {
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
     entry: './src/index.tsx',
     output: {
       path: path.resolve(rootPath, 'dist'),
       filename: '[name].js',
     },
 
-    optimization: {
-      splitChunks: {
-        chunks: 'all',
-      },
-    },
-
     resolve: {
-      extensions: ['.tsx', '.ts'],
+      extensions: ['.tsx', '.ts', '.jsx', '.js'],
     },
 
     module: {
@@ -44,9 +40,27 @@ module.exports = function () {
             },
           ],
         },
+        {
+          test: /\.css$/,
+          use: [
+            argv.mode === 'development'
+              ? 'style-loader'
+              : MiniCssExtractPlugin.loader,
+            'css-loader',
+          ],
+        },
       ],
     },
 
-    plugins: [new HtmlWebpackPlugin()],
+    devServer: {
+      static: './dist',
+      port: 9000,
+      open: true,
+    },
+
+    plugins: [
+      new HtmlWebpackPlugin({ template: './assets/template.html' }),
+      new MiniCssExtractPlugin(),
+    ],
   };
 };
