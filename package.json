@@ -67,9 +67,9 @@
     "lint-staged:tsc": "tsc --noEmit && :",
     "lint-staged": "run-p 'lint-staged:* {@}'",
     "build": "webpack -c webpack.config.js --mode production",
-    "watch:server": "ts-node --project ./tsconfig.node.json ./src/server/index.ts",
-    "watch:dev": "webpack -c webpack.config.js --mode production --watch",
-    "watch": "run-p 'watch:*'",
-    "test": "jest"
+    "dev:api": "ts-node --project ./tsconfig.node.json ./src/server/index.ts",
+    "dev:serve": "webpack serve -c webpack.config.js --mode development",
+    "test": "jest",
+    "start": "run-p 'dev:*'"
   }
 }
