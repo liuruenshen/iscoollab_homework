@@ -25,10 +25,13 @@ app.get('/menu', (req, res) => {
   const response: ApiMenuResponse = { menu: MENU };
   const data = JSON.stringify(response);
   res.header('Content-Type', 'application/json');
+  res.header('Access-Control-Allow-Origin', '*');
   res.send(data);
 });
 
 app.post('/order', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+
   try {
     const orderList: ApiOrderListRequest = req.body;
     const validOrderItems = orderList.items.filter(
@@ -58,6 +61,8 @@ app.post('/order', (req, res) => {
 
 app.get('/history', (req, res) => {
   const response: ApiHistoryResponse = { items: OrderHistories };
+
+  res.header('Access-Control-Allow-Origin', '*');
   res.send(JSON.stringify(response));
 });
 
