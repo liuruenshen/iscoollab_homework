@@ -46,14 +46,12 @@ app.post('/order', (req, res) => {
     };
 
     OrderHistories.push(newOrder);
-
-    res.statusCode = 204;
+    res.send(JSON.stringify({ result: true }));
   } catch (e) {
     res.statusCode = 400;
     if (e instanceof Error) {
       res.statusMessage = e.message;
     }
-  } finally {
     res.end();
   }
 });

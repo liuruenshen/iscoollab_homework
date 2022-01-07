@@ -31,7 +31,11 @@ export const orderMenuService = createApi({
       query(body) {
         return {
           url: 'order',
+          method: 'POST',
           body,
+          headers: {
+            'Content-Type': 'application/json',
+          },
         };
       },
     }),
