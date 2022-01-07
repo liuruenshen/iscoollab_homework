@@ -1,15 +1,15 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
 /* eslint no-undef: "off" */
-const path = require("path")
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const rootPath = __dirname
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const rootPath = __dirname;
 
 module.exports = function () {
   return {
-    devtool: "source-map",
-    entry: "./src/index.tsx",
+    devtool: 'source-map',
+    entry: './src/index.tsx',
     output: {
-      path: path.resolve(rootPath, "dist"),
+      path: path.resolve(rootPath, 'dist'),
       filename: '[name].js',
     },
 
@@ -44,9 +44,9 @@ module.exports = function () {
             },
           ],
         },
-      ]
+      ],
     },
 
-    plugins: [new HtmlWebpackPlugin()]
+    plugins: [new HtmlWebpackPlugin()],
   };
 };
