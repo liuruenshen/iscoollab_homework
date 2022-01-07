@@ -1388,6 +1388,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/roboto@npm:^4.5.1":
+  version: 4.5.1
+  resolution: "@fontsource/roboto@npm:4.5.1"
+  checksum: dddc5b883e0355096ebb8944a6ad8ec5fec583482e96b22c2b2b7e83d3a538a85586c379b9471db117f934bfcea981c273c153bdf55a33f5c44a39837dc6fa97
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
@@ -5214,6 +5221,7 @@ __metadata:
     "@babel/cli": ^7.16.7
     "@babel/core": ^7.16.7
     "@babel/preset-env": ^7.16.7
+    "@fontsource/roboto": ^4.5.1
     "@mui/material": ^5.2.7
     "@reduxjs/toolkit": ^1.7.1
     "@types/express": ^4.17.13
