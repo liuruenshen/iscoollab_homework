@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { PropsWithChildren } from 'react';
 import {
   createTheme,
@@ -7,12 +7,16 @@ import {
 } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
-  interface ExtendBackground {
-    light: string;
+  interface Theme {
+    extendBackground: {
+      light: string;
+    };
   }
 
   interface ThemeOptions {
-    extendBackground?: ExtendBackground;
+    extendBackground?: {
+      light?: string;
+    };
   }
 }
 
