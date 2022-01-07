@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { PropsWithChildren } from 'react';
 import Box from '@mui/material/Box';
 
@@ -14,6 +14,7 @@ export default function MainLayout({ children }: PropsWithChildren<unknown>) {
         backgroundColor: 'primary.light',
         padding: '16px',
         boxSizing: 'border-box',
+        height: '50px',
       }}
     >
       {children}

@@ -41,3 +41,6 @@ export const orderMenuService = createApi({
     }),
   }),
 });
+
+export const { useMenuQuery, useHistoryQuery, useOrderMutation } =
+  orderMenuService;

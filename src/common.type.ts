@@ -1,4 +1,4 @@
-type Category = '日式料理' | '台菜' | '美式料理';
+export type Category = '日式料理' | '台菜' | '美式料理';
 
 export interface DishItem {
   category: Category;
