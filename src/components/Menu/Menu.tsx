@@ -1,4 +1,6 @@
 import React, { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
@@ -8,7 +10,10 @@ import AddIcon from '@mui/icons-material/AddBoxRounded';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useMenuQuery } from '../../redux/service';
-import { Category, DishItem } from '../../common.type';
+import { RootState } from '../../redux/store';
+import { orderAdded } from '../../redux/slice';
+import { Category, DishItem, OrderItem } from '../../common.type';
+import { orderMapSelector, OrderMap } from '../../redux/selector';
 
 interface MenuCategory {
   category: string;
@@ -18,6 +23,11 @@ interface MenuCategory {
 type MenuCategoryMap = Record<Category, DishItem[]>;
 
 export default function Menu() {
+  const dispatch = useDispatch();
+  const orderMap = useSelector<RootState, OrderMap>((state) =>
+    orderMapSelector(state)
+  );
+
   const { data = [] } = useMenuQuery();
 
   const menuCategory: MenuCategory[] = useMemo(() => {
@@ -32,6 +42,15 @@ export default function Menu() {
       ([key, value]): MenuCategory => ({ category: key, items: value })
     );
   }, [data]);
+
+  const addOrder = (dishId: OrderItem['dishId']) => {
+    dispatch(
+      orderAdded({
+        dishId,
+        amount: 1,
+      })
+    );
+  };
 
   return (
     <Box
@@ -55,7 +74,14 @@ export default function Menu() {
             <Collapse in={true} timeout="auto">
               <List component="div" disablePadding>
                 {item.items.map((subItem) => (
-                  <ListItemButton key={subItem.dish} sx={{ pl: 4 }}>
+                  <ListItemButton
+                    key={subItem.dish}
+                    sx={{ pl: 4 }}
+                    onClick={() => {
+                      addOrder(subItem.id);
+                    }}
+                    disabled={!!orderMap[subItem.id]}
+                  >
                     <ListItemIcon>
                       <AddIcon></AddIcon>
                     </ListItemIcon>
