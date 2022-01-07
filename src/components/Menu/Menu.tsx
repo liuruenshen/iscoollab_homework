@@ -40,7 +40,10 @@ export default function Menu() {
         backgroundColor: (theme) => theme.extendBackground.light,
       }}
     >
-      <List component="nav">
+      <List
+        component="nav"
+        sx={{ backgroundColor: (theme) => theme.extendBackground.light }}
+      >
         {menuCategory.map((item) => (
           <>
             <ListItemText

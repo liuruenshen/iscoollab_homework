@@ -13,6 +13,7 @@ const Content = styled(Box)(() => ({
   flexDirection: 'row',
   justifyContent: 'flex-start',
   alignItems: 'stretch',
+  overflowY: 'auto',
 }));
 
 function MainFrame({ children }: PropsWithChildren<object>) {
