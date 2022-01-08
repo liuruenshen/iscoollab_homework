@@ -1,5 +1,4 @@
 import React from 'react';
-import MainFrame from '../Frame/MainFrame';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Menu from '../Menu/Menu';
@@ -16,12 +15,10 @@ const Grid = styled(Box)(({ theme }) => ({
 
 function Order() {
   return (
-    <MainFrame>
-      <Grid>
-        <Menu></Menu>
-        <Cart></Cart>
-      </Grid>
-    </MainFrame>
+    <Grid>
+      <Menu></Menu>
+      <Cart></Cart>
+    </Grid>
   );
 }
 

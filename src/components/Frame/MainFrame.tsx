@@ -1,6 +1,7 @@
 import '@fontsource/roboto';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
+import { Outlet } from 'react-router-dom';
 
 import AppTheme from '../../styles/theme';
 import MainLayout from '../layout/MainLayout';
@@ -17,12 +18,14 @@ const Content = styled(Box)(() => ({
   overflowY: 'auto',
 }));
 
-function MainFrame({ children }: PropsWithChildren<object>) {
+function MainFrame() {
   return (
     <AppTheme>
       <MainLayout>
         <Header></Header>
-        <Content>{children}</Content>
+        <Content>
+          <Outlet />
+        </Content>
       </MainLayout>
     </AppTheme>
   );
