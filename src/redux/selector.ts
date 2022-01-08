@@ -16,4 +16,4 @@ const orderMapSelector = createSelector([allOrderSelector], (orderList) => {
   );
 });
 
-export { orderMapSelector };
+export { orderMapSelector, allOrderSelector };
