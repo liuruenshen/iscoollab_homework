@@ -11,7 +11,7 @@ module.exports = () => {
     const promise = new Promise((resolve) => {
       localResolve = resolve;
     });
-    apiServer = spawn('yarn', ['watch:server'], { detached: true });
+    apiServer = spawn('yarn', ['dev:api'], { detached: true });
     apiServer.stdout.on('data', (data) => {
       console.log('[API SERVER][stdout]', data.toString());
       localResolve();

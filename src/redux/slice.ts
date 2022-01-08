@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import orderAdapter from './adapter';
 
 const orderSlice = createSlice({
-  name: 'books',
+  name: 'order',
   initialState: orderAdapter.getInitialState(),
   reducers: {
-    orderAdded: orderAdapter.addOne,
+    mealAdded: orderAdapter.addOne,
     orderSubmitted: orderAdapter.removeAll,
   },
 });
 
-export const { orderAdded, orderSubmitted } = orderSlice.actions;
+export const { mealAdded, orderSubmitted } = orderSlice.actions;
 
 export default orderSlice;
