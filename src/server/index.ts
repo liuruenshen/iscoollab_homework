@@ -59,6 +59,15 @@ app.post('/order', (req, res) => {
   }
 });
 
+app.options('/order', (req, res) => {
+  res.statusCode = 204;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  res.end();
+});
+
 app.get('/history', (req, res) => {
   const response: ApiHistoryResponse = { items: OrderHistories };
 
