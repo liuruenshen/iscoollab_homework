@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 
 const Content = styled(Box)(() => ({
   height: 'calc(100% - 50px)',
+  width: '100%',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-start',
