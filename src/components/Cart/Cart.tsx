@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 import { allOrderSelector } from '../../redux/selector';
 import { RootState } from '../../redux/store';
@@ -11,28 +12,8 @@ import { OrderItem } from '../../common.type';
 import useMenuCategory from '../../hooks/useMenuCategory';
 import { changeMealAmount, removeMeal, removeOrder } from '../../redux/slice';
 import { useOrderMutation } from '../../redux/service';
-
-const Grid = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  justifyContent: 'flex-start',
-  backgroundColor: theme.palette.background.paper,
-  borderRadius: '10px',
-  padding: '20px',
-  boxSizing: 'border-box',
-}));
-
-const MealOrderBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'stretch',
-  justifyContent: 'flex-start',
-  backgroundColor: theme.extendBackground?.light,
-  borderRadius: '4px',
-  padding: '10px',
-  margin: '20px 0 0 0 ',
-}));
+import Grid from '../layout/SingleColumnGrid';
+import MealOrderBox from '../layout/Shelf';
 
 const Footer = styled(Box)(() => ({
   padding: '10px',
@@ -51,6 +32,8 @@ export default function Cart() {
 
   const [updateOrder] = useOrderMutation();
 
+  const navigate = useNavigate();
+
   const updateMealAmount = (data: OrderItem) => {
     if (data.amount < 1) {
       dispatch(removeMeal(data.dishId));
@@ -63,13 +46,14 @@ export default function Cart() {
     try {
       await updateOrder({ items: orderList });
       dispatch(removeOrder());
+      navigate('/history');
     } catch (e) {
       //
     }
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
       <Grid>
         {orderList.map((item) => (
           <MealOrderBox

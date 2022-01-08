@@ -23,11 +23,14 @@ export const orderMenuService = createApi({
         return data.menu;
       },
     }),
-    history: builder.query<Type.ApiHistoryResponse, void>({
+    history: builder.query<Type.ApiHistoryResponse['items'], void>({
       query() {
         return {
           url: 'history',
         };
+      },
+      transformResponse(data: Type.ApiHistoryResponse) {
+        return data.items;
       },
     }),
     order: builder.mutation<void, Type.ApiOrderListRequest>({

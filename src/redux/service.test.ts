@@ -90,6 +90,6 @@ describe('Test the menu API', () => {
 
     const matchedList = orderList.map((items) => ({ items }));
 
-    expect(result.data).toMatchObject({ items: matchedList });
+    expect(result.data).toMatchObject(matchedList);
   });
 });

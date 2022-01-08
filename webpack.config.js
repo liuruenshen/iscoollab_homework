@@ -55,6 +55,7 @@ module.exports = function (env, argv) {
 
     devServer: {
       static: './dist',
+      historyApiFallback: true,
       port: 9000,
       open: true,
     },
