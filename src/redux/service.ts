@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import * as Type from '../common.type';
-import { SERVICE_PORT } from '../constants';
+import { TESTING_SERVICE_PORT, SERVICE_PORT } from '../constants';
 
-export const serviceUrl = `http://localhost:${SERVICE_PORT}`;
+const serviceListeningPort =
+  NODE_ENV === 'test' ? TESTING_SERVICE_PORT : SERVICE_PORT;
+
+export const serviceUrl = `http://localhost:${serviceListeningPort}`;
 
 export const orderMenuService = createApi({
   reducerPath: 'orderMenuService',

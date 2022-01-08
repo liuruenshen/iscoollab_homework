@@ -8,7 +8,7 @@ import {
   OrderList,
 } from '../common.type';
 
-import { SERVICE_PORT, MENU } from '../constants';
+import { TESTING_SERVICE_PORT, SERVICE_PORT, MENU } from '../constants';
 
 const app = express();
 
@@ -75,5 +75,8 @@ app.get('/history', (req, res) => {
   res.send(JSON.stringify(response));
 });
 
-app.listen(SERVICE_PORT);
-console.log('API Server start serving...');
+const listeningPort =
+  process.env.NODE_ENV === 'test' ? TESTING_SERVICE_PORT : SERVICE_PORT;
+
+app.listen(listeningPort);
+console.log(`API Server start serving on ${listeningPort}`);

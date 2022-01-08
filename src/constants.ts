@@ -4,6 +4,8 @@ import { DishItem } from './common.type';
 
 export const SERVICE_PORT = 8888;
 
+export const TESTING_SERVICE_PORT = 8887;
+
 export const MENU: DishItem[] = [
   { category: '日式料理', dish: '鰻魚丼', id: uuidv4() },
   { category: '日式料理', dish: '生魚片', id: uuidv4() },

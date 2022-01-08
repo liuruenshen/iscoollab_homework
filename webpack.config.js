@@ -3,6 +3,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { DefinePlugin } = require('webpack');
 
 const rootPath = __dirname;
 
@@ -61,6 +62,9 @@ module.exports = function (env, argv) {
     plugins: [
       new HtmlWebpackPlugin({ template: './assets/template.html' }),
       new MiniCssExtractPlugin(),
+      new DefinePlugin({
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      }),
     ],
   };
 };
