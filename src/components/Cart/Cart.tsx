@@ -28,7 +28,7 @@ const MealOrderBox = styled(Box)(({ theme }) => ({
   flexDirection: 'row',
   alignItems: 'stretch',
   justifyContent: 'flex-start',
-  backgroundColor: theme.extendBackground.light,
+  backgroundColor: theme.extendBackground?.light,
   borderRadius: '4px',
   padding: '10px',
   margin: '20px 0 0 0 ',
@@ -72,11 +72,20 @@ export default function Cart() {
     <Box sx={{ flexGrow: 1 }}>
       <Grid>
         {orderList.map((item) => (
-          <MealOrderBox key={item.dishId}>
-            <Box sx={{ width: '100px' }}>{mealMap[item.dishId].dish}</Box>
+          <MealOrderBox
+            key={item.dishId}
+            data-testid={`MealOrderBox-${item.dishId}`}
+          >
+            <Box
+              data-testid={`MealName-${item.dishId}`}
+              sx={{ width: '100px' }}
+            >
+              {mealMap[item.dishId].dish}
+            </Box>
             <TextField
               type="number"
               value={item.amount}
+              data-testid={`TextField-${item.dishId}`}
               onChange={(event) => {
                 updateMealAmount({
                   dishId: item.dishId,
