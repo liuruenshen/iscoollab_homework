@@ -11,7 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useMenuQuery } from '../../redux/service';
 import { RootState } from '../../redux/store';
-import { orderAdded } from '../../redux/slice';
+import { mealAdded } from '../../redux/slice';
 import { Category, DishItem, OrderItem } from '../../common.type';
 import { orderMapSelector, OrderMap } from '../../redux/selector';
 
@@ -45,7 +45,7 @@ export default function Menu() {
 
   const addOrder = (dishId: OrderItem['dishId']) => {
     dispatch(
-      orderAdded({
+      mealAdded({
         dishId,
         amount: 1,
       })
@@ -56,19 +56,16 @@ export default function Menu() {
     <Box
       sx={{
         width: 200,
-        backgroundColor: (theme) => theme.extendBackground.light,
+        backgroundColor: (theme) => theme.extendBackground?.light,
       }}
     >
       <List
         component="nav"
-        sx={{ backgroundColor: (theme) => theme.extendBackground.light }}
+        sx={{ backgroundColor: (theme) => theme.extendBackground?.light }}
       >
         {menuCategory.map((item) => (
-          <>
-            <ListItemText
-              key={item.category}
-              sx={{ padding: '4px 0 4px 10px' }}
-            >
+          <React.Fragment key={item.category}>
+            <ListItemText sx={{ padding: '4px 0 4px 10px' }}>
               {item.category}
             </ListItemText>
             <Collapse in={true} timeout="auto">
@@ -81,6 +78,7 @@ export default function Menu() {
                       addOrder(subItem.id);
                     }}
                     disabled={!!orderMap[subItem.id]}
+                    data-testid={subItem.id}
                   >
                     <ListItemIcon>
                       <AddIcon></AddIcon>
@@ -90,7 +88,7 @@ export default function Menu() {
                 ))}
               </List>
             </Collapse>
-          </>
+          </React.Fragment>
         ))}
       </List>
     </Box>
