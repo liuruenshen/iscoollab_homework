@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
@@ -9,18 +9,11 @@ import ListItemText from '@mui/material/ListItemText';
 import AddIcon from '@mui/icons-material/AddBoxRounded';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-import { useMenuQuery } from '../../redux/service';
 import { RootState } from '../../redux/store';
 import { mealAdded } from '../../redux/slice';
-import { Category, DishItem, OrderItem } from '../../common.type';
+import { OrderItem } from '../../common.type';
 import { orderMapSelector, OrderMap } from '../../redux/selector';
-
-interface MenuCategory {
-  category: string;
-  items: DishItem[];
-}
-
-type MenuCategoryMap = Record<Category, DishItem[]>;
+import useMenuCategory from '../../hooks/useMenuCategory';
 
 export default function Menu() {
   const dispatch = useDispatch();
@@ -28,20 +21,7 @@ export default function Menu() {
     orderMapSelector(state)
   );
 
-  const { data = [] } = useMenuQuery();
-
-  const menuCategory: MenuCategory[] = useMemo(() => {
-    const dataMap = data.reduce((result, current) => {
-      return {
-        ...result,
-        [current.category]: [...(result[current.category] || []), current],
-      };
-    }, {} as MenuCategoryMap);
-
-    return Object.entries(dataMap).map(
-      ([key, value]): MenuCategory => ({ category: key, items: value })
-    );
-  }, [data]);
+  const { menuCategoryList } = useMenuCategory();
 
   const addOrder = (dishId: OrderItem['dishId']) => {
     dispatch(
@@ -63,7 +43,7 @@ export default function Menu() {
         component="nav"
         sx={{ backgroundColor: (theme) => theme.extendBackground?.light }}
       >
-        {menuCategory.map((item) => (
+        {menuCategoryList.map((item) => (
           <React.Fragment key={item.category}>
             <ListItemText sx={{ padding: '4px 0 4px 10px' }}>
               {item.category}
