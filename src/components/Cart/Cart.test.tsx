@@ -1,7 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
 import * as service from '../../redux/service';
@@ -12,6 +11,7 @@ import { DishItem } from '../../common.type';
 
 jest.mock('react-redux');
 jest.mock('../../redux/service');
+jest.mock('react-router-dom');
 
 const mockedStore: store.RootState = {
   order: {
@@ -79,10 +79,11 @@ describe('testing the Cart component', () => {
       }
 
       const container = screen.getByTestId(`MealOrderBox-${item.dishId}`);
-      const input = screen.getByTestId(`TextField-${item.dishId}`);
+      const inputContainer = screen.getByTestId(`TextField-${item.dishId}`);
       const mealName = screen.getByTestId(`MealName-${item.dishId}`);
+      const input = inputContainer.querySelector('input');
 
-      expect(container).toContainElement(input);
+      expect(container).toContainElement(inputContainer);
       expect(container).toContainElement(mealName);
       expect(mealName).toHaveTextContent(menuMap[item.dishId].dish);
       expect(input).toHaveValue(item.amount);
