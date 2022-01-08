@@ -22,9 +22,10 @@ module.exports = {
   rules: {},
   overrides: [
     {
-      files: ['test/**/*.ts', '**/*.test.ts'],
+      files: ['test/**/*.ts', '**/*.test.ts', '**/*.test.tsx'],
       rules: {
         '@typescript-eslint/no-explicit-any': ['off'],
+        '@typescript-eslint/ban-ts-comment': ['off'],
       },
     },
     {
