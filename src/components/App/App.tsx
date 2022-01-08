@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Order from '../Order/Order';
+import History from '../History/History';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 import MainFrame from '../Frame/MainFrame';
@@ -16,6 +17,7 @@ render(
           <Route path="/" element={<MainFrame />}>
             <Route index element={<Navigate to="/order" />}></Route>
             <Route path="order" element={<Order />} />
+            <Route path="history" element={<History />} />
           </Route>
         </Routes>
       </BrowserRouter>
