@@ -29,3 +29,7 @@ export interface ApiMenuResponse {
 export interface ApiHistoryResponse {
   items: OrderList[];
 }
+
+declare global {
+  const NODE_ENV: string;
+}

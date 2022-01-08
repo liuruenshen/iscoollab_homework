@@ -8,7 +8,7 @@ import {
   OrderList,
 } from '../common.type';
 
-import { SERVICE_PORT, MENU } from '../constants';
+import { TESTING_SERVICE_PORT, SERVICE_PORT, MENU } from '../constants';
 
 const app = express();
 
@@ -59,6 +59,15 @@ app.post('/order', (req, res) => {
   }
 });
 
+app.options('/order', (req, res) => {
+  res.statusCode = 204;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  res.end();
+});
+
 app.get('/history', (req, res) => {
   const response: ApiHistoryResponse = { items: OrderHistories };
 
@@ -66,5 +75,8 @@ app.get('/history', (req, res) => {
   res.send(JSON.stringify(response));
 });
 
-app.listen(SERVICE_PORT);
-console.log('API Server start serving...');
+const listeningPort =
+  process.env.NODE_ENV === 'test' ? TESTING_SERVICE_PORT : SERVICE_PORT;
+
+app.listen(listeningPort);
+console.log(`API Server start serving on ${listeningPort}`);
