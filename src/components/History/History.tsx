@@ -1,21 +1,33 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import Button from '@mui/material/Button';
 
 import useMenuCategory from '../../hooks/useMenuCategory';
-import { useHistoryQuery } from '../../redux/service';
+import { useHistoryQuery, useCleanHistoryMutation } from '../../redux/service';
 import Grid from '../layout/SingleColumnGrid';
 import HistoryBox from '../layout/Shelf';
 import InlineRow from '../layout/InlineRow';
+import Footer from '../layout/Footer';
 
 export default function History() {
   const { data: historyList = [], refetch } = useHistoryQuery();
+  const [cleanHistory] = useCleanHistoryMutation();
 
   const { mealMap } = useMenuCategory();
 
   useEffect(() => {
     refetch();
   }, []);
+
+  const doCleanHistory = async () => {
+    try {
+      await cleanHistory();
+      refetch();
+    } catch (e) {
+      //
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
@@ -38,6 +50,16 @@ export default function History() {
             </InlineRow>
           </HistoryBox>
         ))}
+        <Footer>
+          <Button
+            variant="contained"
+            onClick={doCleanHistory}
+            disabled={!historyList.length}
+            data-testid="Clean-History"
+          >
+            {'清除記錄'}
+          </Button>
+        </Footer>
       </Grid>
     </Box>
   );
