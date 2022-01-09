@@ -33,14 +33,18 @@ export default function History() {
     <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
       <Grid>
         {historyList.map((item) => (
-          <HistoryBox key={item.id}>
+          <HistoryBox key={item.id} data-testid={`HistoryBox-${item.id}`}>
             <InlineRow flexWrap={'wrap'}>
               <Box sx={{ padding: '0 0 8px 0' }}>
-                <Chip label={`${new Date(item.date).toDateString()}`}></Chip>
+                <Chip
+                  data-testid={`Date-${item.id}`}
+                  label={`${new Date(item.date).toDateString()}`}
+                ></Chip>
               </Box>
               {item.items.map((subItem) => (
                 <Box key={subItem.dishId} sx={{ padding: '0 0 8px 0' }}>
                   <Chip
+                    data-testid={`Dish-Info-${item.id}-${subItem.dishId}`}
                     label={`${mealMap && mealMap[subItem.dishId]?.dish} x ${
                       subItem.amount
                     }`}
