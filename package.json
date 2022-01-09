@@ -61,7 +61,7 @@
   },
   "lint-staged": {
     "*.ts": "yarn lint-staged --",
-    "*.json": "npx prettier -c --write"
+    "**/*": "prettier --write --ignore-unknown"
   },
   "scripts": {
     "postinstall": "husky install",
