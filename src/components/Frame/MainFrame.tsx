@@ -11,12 +11,13 @@ import InlineRow from '../layout/InlineRow';
 import { styled } from '@mui/material/styles';
 
 const Content = styled(Box)(() => ({
-  minHeight: 'calc(100% - 50px)',
+  minHeight: 'calc(100% - 100px)',
   width: '100%',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-start',
   alignItems: 'stretch',
+  overflowY: 'auto',
 }));
 
 function MainFrame() {

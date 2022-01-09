@@ -53,7 +53,7 @@ export default function Cart() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
+    <Box sx={{ flexGrow: 1 }}>
       <Grid>
         {orderList.map((item) => (
           <MealOrderBox
