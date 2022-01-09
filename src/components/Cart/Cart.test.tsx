@@ -1,6 +1,8 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import '@testing-library/jest-dom';
 
 import * as service from '../../redux/service';
@@ -19,7 +21,7 @@ const mockedStore: store.RootState = {
     entities: {
       [MENU[0].id]: { dishId: MENU[0].id, amount: 3 },
       [MENU[2].id]: { dishId: MENU[2].id, amount: 2 },
-      [MENU[4].id]: { dishId: MENU[4].id, amount: 5 },
+      [MENU[4].id]: { dishId: MENU[4].id, amount: 1 },
     },
   },
   // @ts-ignore
@@ -45,6 +47,10 @@ const mockedUseOrderMutation = service.useOrderMutation as jest.Mock<
 
 describe('testing the Cart component', () => {
   const dispatchSpy = jest.fn((arg) => arg);
+  let updateUserOrderResolver: Promise<unknown> | null = null;
+  const updateUserOrderSpy = jest.fn(
+    (arg) => (updateUserOrderResolver = Promise.resolve(arg))
+  );
   // @ts-ignore
   mockedUseDispatch.mockImplementation(() => {
     return dispatchSpy;
@@ -61,7 +67,7 @@ describe('testing the Cart component', () => {
 
   // @ts-ignore
   mockedUseOrderMutation.mockImplementation(() => {
-    return [() => Promise.resolve()];
+    return [(arg: unknown) => updateUserOrderSpy(arg)];
   });
 
   it('should render all the order items', () => {
@@ -88,5 +94,57 @@ describe('testing the Cart component', () => {
       expect(mealName).toHaveTextContent(menuMap[item.dishId].dish);
       expect(input).toHaveValue(item.amount);
     });
+  });
+
+  it('should dispatch the expected action', async () => {
+    render(<Cart />);
+
+    let inputContainer = screen.getByTestId(`TextField-${MENU[0].id}`);
+    let input = inputContainer.querySelector('input');
+
+    if (!input) {
+      fail(`Element TextField-${MENU[0].id} doesn't contain a input element`);
+    }
+
+    fireEvent.change(input, { target: { value: 4 } });
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      type: 'order/changeMealAmount',
+      payload: { changes: { amount: 4, dishId: MENU[0].id }, id: MENU[0].id },
+    });
+    dispatchSpy.mockReset();
+
+    inputContainer = screen.getByTestId(`TextField-${MENU[4].id}`);
+    input = inputContainer.querySelector('input');
+
+    if (!input) {
+      fail(`Element TextField-${MENU[4].id} doesn't contain a input element`);
+    }
+
+    fireEvent.change(input, { target: { value: 0 } });
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      type: 'order/removeMeal',
+      payload: MENU[4].id,
+    });
+    dispatchSpy.mockReset();
+
+    const button = screen.getByTestId('Submit-Order');
+    userEvent.click(button);
+    expect(updateUserOrderSpy).toHaveBeenCalledTimes(1);
+    expect(updateUserOrderSpy.mock.calls[0][0]).toMatchObject({
+      items: Object.entries(mockedStore.order.entities).map(
+        ([, value]) => value
+      ),
+    });
+
+    await updateUserOrderResolver;
+
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      type: 'order/removeOrder',
+      payload: undefined,
+    });
+    dispatchSpy.mockReset();
   });
 });
