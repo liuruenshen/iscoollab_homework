@@ -92,4 +92,20 @@ describe('Test the menu API', () => {
 
     expect(result.data).toMatchObject(matchedList);
   });
+
+  test('should be able to clean up order history', async () => {
+    expect.assertions(1);
+
+    await storeRef.store.dispatch<any>(
+      orderMenuService.endpoints.cleanHistory.initiate()
+    );
+
+    const result = await storeRef.store.dispatch<any>(
+      orderMenuService.endpoints.history.initiate(undefined, {
+        forceRefetch: true,
+      })
+    );
+
+    expect(result.data.length).toBe(0);
+  });
 });

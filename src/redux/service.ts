@@ -45,8 +45,20 @@ export const orderMenuService = createApi({
         };
       },
     }),
+    cleanHistory: builder.mutation<void, void>({
+      query() {
+        return {
+          url: 'history',
+          method: 'DELETE',
+        };
+      },
+    }),
   }),
 });
 
-export const { useMenuQuery, useHistoryQuery, useOrderMutation } =
-  orderMenuService;
+export const {
+  useMenuQuery,
+  useHistoryQuery,
+  useOrderMutation,
+  useCleanHistoryMutation,
+} = orderMenuService;
