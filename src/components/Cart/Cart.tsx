@@ -1,5 +1,4 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -14,13 +13,7 @@ import { changeMealAmount, removeMeal, removeOrder } from '../../redux/slice';
 import { useOrderMutation } from '../../redux/service';
 import Grid from '../layout/SingleColumnGrid';
 import MealOrderBox from '../layout/Shelf';
-
-const Footer = styled(Box)(() => ({
-  padding: '10px',
-  margin: '20px 0 0 0 ',
-  display: 'flex',
-  justifyContent: 'flex-end',
-}));
+import Footer from '../layout/Footer';
 
 export default function Cart() {
   const orderList = useSelector<RootState, OrderItem[]>((state) =>

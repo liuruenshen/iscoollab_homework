@@ -1,4 +1,5 @@
 import express from 'express';
+import { resolve } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import {
   ApiMenuResponse,
@@ -7,8 +8,21 @@ import {
   DishHashRecord,
   OrderList,
 } from '../common.type';
+import { writeFileSync, readFileSync } from 'fs';
 
 import { TESTING_SERVICE_PORT, SERVICE_PORT, MENU } from '../constants';
+
+const PROD_HISTORY_JSON_PATH = resolve(__dirname, '../../data', 'history.json');
+const TESTING_HISTORY_JSON_PATH = resolve(
+  __dirname,
+  '../../data',
+  'testing-history.json'
+);
+
+export const HISTORY_JSON_PATH =
+  process.env.NODE_ENV === 'test'
+    ? TESTING_HISTORY_JSON_PATH
+    : PROD_HISTORY_JSON_PATH;
 
 const app = express();
 
@@ -17,7 +31,22 @@ const DishHash: DishHashRecord = MENU.reduce(
   {}
 );
 
-const OrderHistories: OrderList[] = [];
+const OrderHistories: OrderList[] =
+  process.env.NODE_ENV === 'test' ? [] : restoreOrderHistories();
+
+function saveOrderHistories() {
+  writeFileSync(HISTORY_JSON_PATH, JSON.stringify(OrderHistories));
+}
+
+function restoreOrderHistories() {
+  try {
+    return JSON.parse(
+      readFileSync(HISTORY_JSON_PATH, { encoding: 'utf-8' }) || '[]'
+    );
+  } catch (e) {
+    return [];
+  }
+}
 
 app.use(express.json());
 
@@ -49,6 +78,7 @@ app.post('/order', (req, res) => {
     };
 
     OrderHistories.push(newOrder);
+    saveOrderHistories();
     res.send(JSON.stringify({ result: true }));
   } catch (e) {
     res.statusCode = 400;
@@ -73,6 +103,23 @@ app.get('/history', (req, res) => {
 
   res.header('Access-Control-Allow-Origin', '*');
   res.send(JSON.stringify(response));
+});
+
+app.delete('/history', (req, res) => {
+  OrderHistories.splice(0, OrderHistories.length);
+  saveOrderHistories();
+
+  res.header('Access-Control-Allow-Origin', '*');
+  res.statusCode = 204;
+  res.end();
+});
+
+app.options('/history', (req, res) => {
+  res.statusCode = 204;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'DELETE');
+
+  res.end();
 });
 
 const listeningPort =
