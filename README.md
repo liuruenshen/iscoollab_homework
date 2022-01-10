@@ -2,7 +2,11 @@
 
 yarn version 3+
 
+- [Installation Guide](https://yarnpkg.com/getting-started/install)
+
 Node.JS v14+
+
+- [Installation Guide](https://nodejs.org/en/)
 
 ## Install
 
@@ -15,6 +19,12 @@ yarn install
 ```sh
 yarn start
 ```
+
+The script will run the webpack-serve command and the API server to bring up a simple menu order page on the browser automatically.
+If the browser doesn't open the menu order page, type the following the URL on the address bar:
+http://localhost:9000
+
+The API server will listen on port 8888.
 
 ## Run tests
 
