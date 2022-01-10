@@ -58,6 +58,10 @@ const mockedUseSelector = reactRedux.useSelector as jest.Mock<
   typeof reactRedux.useSelector
 >;
 
+const mockedUseMenuQuery = service.useMenuQuery as jest.Mock<
+  typeof service.useMenuQuery
+>;
+
 const mockedUseHistoryQuery = service.useHistoryQuery as jest.Mock<
   typeof service.useHistoryQuery
 >;
@@ -84,6 +88,11 @@ describe('testing the History component', () => {
   });
 
   // @ts-ignore
+  mockedUseMenuQuery.mockImplementation(() => ({
+    data: MENU,
+  }));
+
+  // @ts-ignore
   mockedUseHistoryQuery.mockImplementation(() => ({
     data: HISTORY_DATA,
     refetch: refetchSpy,
@@ -91,11 +100,14 @@ describe('testing the History component', () => {
 
   // @ts-ignore
   mockedUseCleanHistoryMutation.mockImplementation(() => {
-    return [() => cleanHistorySpy()];
+    return [cleanHistorySpy];
   });
 
   it('should render all the order items', () => {
-    expect.assertions(HISTORY_DATA.length);
+    expect.assertions(
+      HISTORY_DATA.length +
+        HISTORY_DATA.reduce((result, item) => result + item.items.length * 2, 0)
+    );
     render(<History />);
 
     const menuMap = MENU.reduce(
@@ -111,7 +123,27 @@ describe('testing the History component', () => {
       const container = screen.getByTestId(`HistoryBox-${item.id}`);
       const date = screen.getByTestId(`Date-${item.id}`);
 
+      item.items.forEach((subItem) => {
+        const orderedDish = screen.getByTestId(
+          `Dish-Info-${item.id}-${subItem.dishId}`
+        );
+        const element = orderedDish.querySelector('span');
+        expect(container).toContainElement(orderedDish);
+        expect(element).toHaveTextContent(
+          `${menuMap[subItem.dishId].dish} x ${subItem.amount}`
+        );
+      });
+
       expect(container).toContainElement(date);
     });
+  });
+
+  it('should dispatch the expected action', async () => {
+    expect.assertions(1);
+    render(<History />);
+
+    const historyElement = screen.getByTestId('Clean-History');
+    userEvent.click(historyElement);
+    expect(cleanHistorySpy).toBeCalledTimes(1);
   });
 });
