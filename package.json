@@ -1,7 +1,7 @@
 {
   "name": "iscoollab_homework",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/electron.js",
   "author": "kiwi <kiwi71728@icloud.com>",
   "license": "MIT",
   "dependencies": {
@@ -16,6 +16,7 @@
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "uuid": "^8.3.2"
@@ -32,11 +33,13 @@
     "@types/lodash": "^4.14.178",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@types/react-helmet": "^6.1.5",
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.5.1",
+    "electron": "^17.0.1",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.28.0",
@@ -72,7 +75,8 @@
     "lint-staged": "run-p 'lint-staged:* {@}'",
     "build": "webpack -c webpack.config.js --mode production",
     "dev:api": "ts-node --project ./tsconfig.node.json ./src/server/index.ts",
-    "dev:serve": "webpack serve -c webpack.config.js --mode development",
+    "dev:serve": "webpack --watch --progress -c webpack.config.js --mode development",
+    "electron": "electron .",
     "test": "jest",
     "start": "run-p 'dev:*'"
   }
