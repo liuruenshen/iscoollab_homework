@@ -10,18 +10,8 @@ const ContentBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   borderRadius: '10px',
   overflow: 'hidden',
-  [theme.breakpoints.down('sm')]: {
-    width: '95%',
-    height: '95%',
-  },
-  [theme.breakpoints.up('sm')]: {
-    width: '80%',
-    height: '80%',
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: '60%',
-    height: '60%',
-  },
+  width: '100%',
+  height: '100%',
 }));
 
 export default function MainLayout({ children }: PropsWithChildren<unknown>) {
